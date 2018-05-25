@@ -1,0 +1,469 @@
+
+<html>
+    
+<head>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        body{     
+            background-size: cover;
+            background-color:white;
+            color:black;
+        }  
+        
+        #ui{                    
+            font-family:Arial, Helvetica, sans-serif;
+        }   
+        #head{
+            font-size:36px;
+
+            font-weight:bold;
+        }
+
+        
+        .board{
+            width:24%;
+            height:10%;
+            float:left;
+            overflow: hidden;
+            text-align:right;
+        }
+        
+        .score{
+            width:50%;
+            float:left;
+            display:none;
+        }
+        .board2{
+            width:50%;
+            height:55%;
+            float:left;
+            display:none;
+        }
+        .board2t{
+            width:50%;
+            height:15%;
+            float:left;
+            display:none;
+        }
+
+        #foot{
+            width:80%;
+            height:10%;
+            font-size:16px;
+            float:left;
+            font-weight:normal;
+        } 
+        #foot2{
+            width:20%;
+            height:10%;
+            font-size:12px;
+            float:right;
+            font-weight:normal;
+        } 
+        
+    </style>
+
+    <script>
+
+    $(function(){
+/*
+@description: HTML page for phonetic alphabet project
+@author: Ming-Yiu Wong 
+@since:2/5/18
+@modified:17/5/18
+*/
+/*
+Information:
+ID:26926040
+Monash University
+Clayton
+FIT3036
+Tutor: David Dowe
+Tutorial Time: 12:00 pm Fri
+*/
+        var iosocket = io.connect();
+        
+        iosocket.on('connect', function () {
+            
+            
+            iosocket.on('message', function(message) {              //Communicates with server to load which state
+                
+                if(message==0)          //0=valid inputs, move onto next page
+                {
+                    var board1=document.getElementsByClassName("board");
+                    for(i=0;i<board1.length;i++)
+                    {
+                        board1[i].style.display="none";
+                    }
+                    var score1=document.getElementsByClassName("score");
+                    for(i=0;i<score1.length;i++)
+                    {
+                        score1[i].style.display="inline";
+                    }
+                    document.getElementById('submitbtn').style.display='none';
+                    document.getElementById('nextbtn').style.display='inline';
+                    document.getElementById('backbtn').style.display='inline';
+                    document.getElementById('fillbtn').style.display='none';
+                    document.getElementById("incomingMessages").innerHTML='';
+                    
+                }
+                if(message==1)          //1=Incomplete form
+                {
+                    document.getElementById("incomingMessages").innerHTML='Form is not complete.'
+                }
+
+                   
+            });
+            iosocket.on('info', function(avelength,scoreof,pwords){         //recieves the score for the score page and prints them out
+                var avelength2d=avelength.toFixed(2);
+                var scoreof2d=scoreof.toFixed(2);
+                document.getElementById("youravelength").innerHTML=avelength2d;
+                document.getElementById("yourscore").innerHTML=scoreof2d;
+                document.getElementById("yourpwords").innerHTML=pwords;
+            });
+            iosocket.on('wronginput', function(newmessage){                 //message in the encoder is not valid
+                document.getElementById('incomingMessages').innerHTML=newmessage
+            });
+            iosocket.on('encodedmessage',function(newmessage){              //prints out encoded message
+                document.getElementById('encodedmessage').innerHTML=newmessage;
+            })
+            iosocket.on('decodemessage',function(newmessage){               //prints out decoded message
+                document.getElementById('decodedmessages').innerHTML=newmessage;
+            })
+            iosocket.on('disconnect', function() {              //user disconnected
+            
+            });
+            $('#submitbtn').click(function(){                    //sends input form request to server
+                var board2=[]
+                var a=document.getElementById("a").value;
+                board2[0]=a
+                var b=document.getElementById("b").value;
+                board2[1]=b
+                var c=document.getElementById("c").value;
+                board2[2]=c
+                var d=document.getElementById("d").value;
+                board2[3]=d
+                var e=document.getElementById("e").value;
+                board2[4]=e
+                var f=document.getElementById("f").value;
+                board2[5]=f
+                var g=document.getElementById("g").value;
+                board2[6]=g
+                var h=document.getElementById("h").value;
+                board2[7]=h
+                var i=document.getElementById("i").value;
+                board2[8]=i
+                var j=document.getElementById("j").value;
+                board2[9]=j
+                var k=document.getElementById("k").value;
+                board2[10]=k
+                var l=document.getElementById("l").value;
+                board2[11]=l
+                var m=document.getElementById("m").value;
+                board2[12]=m
+                var n=document.getElementById("n").value;
+                board2[13]=n
+                var o=document.getElementById("o").value;
+                board2[14]=o
+                var p=document.getElementById("p").value;
+                board2[15]=p
+                var q=document.getElementById("q").value;
+                board2[16]=q
+                var r=document.getElementById("r").value;
+                board2[17]=r
+                var s=document.getElementById("s").value;
+                board2[18]=s
+                var t=document.getElementById("t").value;
+                board2[19]=t
+                var u=document.getElementById("u").value;
+                board2[20]=u
+                var v=document.getElementById("v").value;
+                board2[21]=v
+                var w=document.getElementById("w").value;
+                board2[22]=w
+                var x=document.getElementById("x").value;
+                board2[23]=x
+                var y=document.getElementById("y").value;
+                board2[24]=y
+                var z=document.getElementById("z").value;
+                board2[25]=z
+
+
+
+                iosocket.emit('submit',board2);                         
+            });
+
+            $('#nextbtn').click(function(){                    //changes the page to the encoder/decoder page
+                var hide=document.getElementsByClassName("score");
+                for (i=0;i<hide.length;i++)
+                {
+                    hide[i].style.display="none";
+                }
+                var show2=document.getElementsByClassName("board2");
+                for (i=0;i<show2.length;i++)
+                {
+                    show2[i].style.display="inline";
+                }
+                var show2t=document.getElementsByClassName("board2t");
+                for (i=0;i<show2t.length;i++)
+                {
+                    show2t[i].style.display="inline";
+                }
+                document.getElementById('nextbtn').style.display='none';
+                document.getElementById('encodebtn').style.display='inline'; 
+                document.getElementById('decodebtn').style.display='inline';             
+            });
+            $('#backbtn').click(function(){                    //returns to form
+                var hide=document.getElementsByClassName("score");
+                var hide2=document.getElementsByClassName("board2");
+                var hide2t=document.getElementsByClassName("board2t");
+                var show=document.getElementsByClassName("board");
+                for (i=0;i<hide.length;i++)
+                {
+                    hide[i].style.display="none";
+                }
+                for (i=0;i<hide2.length;i++)
+                {
+                    hide2[i].style.display="none";
+                }
+                for (i=0;i<hide2t.length;i++)
+                {
+                    hide2t[i].style.display="none";
+                }
+                for (i=0;i<show.length;i++)
+                {
+                    show[i].style.display="inline";
+                }
+                document.getElementById('submitbtn').style.display='inline';
+                document.getElementById('nextbtn').style.display='none'; 
+                document.getElementById('backbtn').style.display='none';
+                document.getElementById('encodebtn').style.display='none'; 
+                document.getElementById('decodebtn').style.display='none';
+                document.getElementById('fillbtn').style.display='inline';         
+                    });
+            $('#fillbtn').click(function(){                    //automatically fills form with preset
+                document.getElementById("a").value= "apple";
+                document.getElementById("b").value= "banana";
+                document.getElementById("c").value= "carrot";
+                document.getElementById("d").value= "durian";
+                document.getElementById("e").value= "eggplant";
+                document.getElementById("f").value= "fig";
+                document.getElementById("g").value= "grape";
+                document.getElementById("h").value= "horseradish";
+                document.getElementById("i").value= "igloo";
+                document.getElementById("j").value= "jackfruit";
+                document.getElementById("k").value= "kale";
+                document.getElementById("l").value= "lemon";
+                document.getElementById("m").value= "mango";
+                document.getElementById("n").value= "nectarine";
+                document.getElementById("o").value= "orange";
+                document.getElementById("p").value= "plum";
+                document.getElementById("q").value= "quince";
+                document.getElementById("r").value= "rhubarb";
+                document.getElementById("s").value= "strawberry";
+                document.getElementById("t").value= "turnip";
+                document.getElementById("u").value= "usual";
+                document.getElementById("v").value= "vice";
+                document.getElementById("w").value= "wrist";
+                document.getElementById("x").value= "xylophone";
+                document.getElementById("y").value= "yvonne";
+                document.getElementById("z").value= "zinc";
+                          
+            });
+
+            $('#encodebtn').click(function(){
+                
+                var input=document.getElementById("encode").value;
+                var noiselevel=document.getElementById("noise").value/100
+                if (input.length==0)                            //makes sure the message is valid
+                {
+                    document.getElementById("incomingMessages").innerHTML="Enter a message"
+                }
+                else if (input.length>10 &&(noiselevel>1||noiselevel<0))
+                {
+                    document.getElementById("incomingMessages").innerHTML="Message Too Big and enter a valid noise (between 0 and 100)"
+                }
+                else if (input.length>10)
+                {
+                    document.getElementById("incomingMessages").innerHTML="Message Too Big";
+                }
+                
+                else if (noiselevel>1||noiselevel<0)
+                {
+                    document.getElementById("incomingMessages").innerHTML="Enter a noise level between 0 and 100";
+                }
+                else{
+                    iosocket.emit('encode',input,noiselevel);
+                }
+            })
+            $('#decodebtn').click(function(){                   //sends encoded message to server to decde
+                var input=document.getElementById("decode").value;
+                iosocket.emit('decode',input)
+            });
+        });
+
+
+    });
+</script>
+</head>
+<body>
+<div id='ui' width= "100%" height:"100%" style="height:100%", align="center">     
+    
+        <h1 id='head' width="100%" height=20% align="center">
+            Phonetic Alphabet
+            <br>
+            Input
+        </h1>
+        <div class='board' width='20%'>
+            A: <input type="text" class='input'id='a' size="15">
+        </div>
+        <div class='board' width='25%'>
+            B: <input type="text" class='input'id='b' size="15">
+        </div>
+        <div class='board' width='25%'>
+            C: <input type="text" class='input'id='c' size="15">
+        </div>
+        <div class='board' width='25%'>
+            D: <input type="text" class='input'id='d' size="15">    
+        </div>
+
+        <div class='board' width='20%'>
+            E: <input type="text" class='input'id='e' size="15">
+        </div>
+        <div class='board' width='25%'>
+            F: <input type="text" class='input'id='f' size="15">    
+        </div>
+        <div class='board' width='25%'>
+            G: <input type="text" class='input'id='g' size="15">
+        </div>
+        <div class='board' width='25%'>
+            H: <input type="text" class='input'id='h' size="15">
+        </div>
+
+        <div class='board' width='20%'>
+            I: <input type="text" class='input'id='i' size="15">    
+        </div>
+        <div class='board' width='25%'>
+            J: <input type="text" class='input'id='j' size="15">    
+        </div>
+        <div class='board' width='25%'>
+            K: <input type="text" class='input'id='k' size="15">
+        </div>
+        <div class='board' width='25%'>
+            L: <input type="text" class='input'id='l' size="15">    
+        </div>
+
+        <div class='board' width='20%'>
+            M: <input type="text" class='input'id='m' size="15">
+        </div>
+        <div class='board' width='25%'>
+            N: <input type="text" class='input'id='n' size="15">
+        </div>
+        <div class='board' width='25%'>
+            O: <input type="text" class='input'id='o' size="15">
+        </div>
+        <div class='board' width='25%'>
+            P: <input type="text" class='input'id='p' size="15">
+        </div>
+
+        <div class='board' width='20%'>
+            Q: <input type="text" class='input'id='q' size="15">
+        </div>
+        <div class='board' width='25%'>
+            R: <input type="text" class='input'id='r' size="15">
+        </div>
+        <div class='board' width='25%'>
+            S: <input type="text" class='input'id='s' size="15">
+        </div>
+        <div class='board' width='25%'>
+            T: <input type="text" class='input'id='t' size="15">
+        </div>
+
+        <div class='board' width='20%'>
+            U: <input type="text" class='input'id='u' size="15">
+        </div>
+        <div class='board' width='25%'>
+            V: <input type="text" class='input'id='v' size="15">
+        </div>
+        <div class='board' width='25%'>
+            W: <input type="text" class='input'id='w' size="15">
+        </div>
+        <div class='board' width='25%'>
+            X: <input type="text" class='input'id='x' size="15">
+        </div>
+        
+        <div class='board' width='20%' style='visibility:hidden'>
+            &nbsp    
+        </div>
+        <div class='board' width='25%'>
+            Y: <input type="text" class='input'id='y' size="15">
+        </div>
+        <div class='board' width='25%'>
+            Z: <input type="text" class='input'id='z' size="15">
+        </div>
+        <div class='board' width='25%' >
+            <button id="fillbtn" type="submit" class="btn">
+                autofill
+            </button>    
+        </div>
+
+        <div class='score' width='50%'>
+            Your Alphabet<br>
+            Score:<p id="yourscore" onchange="myFunction()"></p><br>
+            Average length:<p id="youravelength" onchange="myFunction()"></p><br>
+            <p id="yourpwords" onchange="myFunction()"<br>
+        </div>
+        <div class='score' width='50%'>
+            ICAO Alphabet:<br>
+            Score:<br>51.95<br>
+            Average length:<br>2.15<br>
+            
+        </div>
+        <div class='board2t' id='enctitle'>
+            Encoder
+        </div>
+        <div class='board2t' id='dectitle'>
+            Decoder
+        </div>
+        <div class='board2' id='enc'>
+                <input type="text" class='input2'id='encode' size="10">
+                
+                <button id="encodebtn" type="submit" class="btn" style='display:none'>
+                        encode
+                </button>
+                <br>
+                Noise: <input type="number" class='input2'id='noise' size="4">
+                <br>
+                        <p id="encodedmessage" onchange="myFunction()"></p>
+        </div>
+        <div class='board2' id='dec'>
+                <input type="text" class='input2'id='decode' size="15">
+                <button id="decodebtn" type="submit" class="btn" style='display:none'>
+                        decode
+                </button>
+                <br>
+                        <p id="decodedmessages" onchange="myFunction()"></p>
+        </div>
+                
+        <div id='foot' height='10%' width='80%'>
+         <p id="incomingMessages" onchange="myFunction()"></p>
+        </div>
+        <div id='foot2' align="center">
+            <button id="submitbtn" type="submit" class="btn">
+                submit
+            </button>
+            <button id="nextbtn" type="submit" class="btn" style='display:none'>
+                    next
+            </button>
+            &nbsp
+            <button id="backbtn" type="submit" class="btn" style='display:none'>
+                back
+            </button>
+        </div>
+
+</body>
+</html>
