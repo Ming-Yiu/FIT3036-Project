@@ -88,7 +88,7 @@ Tutorial Time: 12:00 pm Fri
         var iosocket = io.connect();
         
         iosocket.on('connect', function () {
-        document.getElementById("titlemes").innerHTML="input";    
+        document.getElementById("titlemes").innerHTML="Input";    
             
             iosocket.on('message', function(message) {              //Communicates with server to load which state
                 
@@ -246,7 +246,7 @@ Tutorial Time: 12:00 pm Fri
                 document.getElementById('encodebtn').style.display='none'; 
                 document.getElementById('decodebtn').style.display='none';
                 document.getElementById('fillbtn').style.display='inline'; 
-                document.getElementById("titlemes").innerHTML="input";
+                document.getElementById("titlemes").innerHTML="Input";
                     });
             $('#fillbtn').click(function(){                    //automatically fills form with preset
                 document.getElementById("a").value= "apple";
