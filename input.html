@@ -88,7 +88,7 @@ Tutorial Time: 12:00 pm Fri
         var iosocket = io.connect();
         
         iosocket.on('connect', function () {
-            
+        document.getElementById("titlemes").innerHTML="input";    
             
             iosocket.on('message', function(message) {              //Communicates with server to load which state
                 
@@ -109,6 +109,7 @@ Tutorial Time: 12:00 pm Fri
                     document.getElementById('backbtn').style.display='inline';
                     document.getElementById('fillbtn').style.display='none';
                     document.getElementById("incomingMessages").innerHTML='';
+                    document.getElementById("titlemes").innerHTML="scores";
                     
                 }
                 if(message==1)          //1=Incomplete form
@@ -215,7 +216,8 @@ Tutorial Time: 12:00 pm Fri
                 }
                 document.getElementById('nextbtn').style.display='none';
                 document.getElementById('encodebtn').style.display='inline'; 
-                document.getElementById('decodebtn').style.display='inline';             
+                document.getElementById('decodebtn').style.display='inline';
+                document.getElementById("titlemes").innerHTML="Encoder/Decoder";
             });
             $('#backbtn').click(function(){                    //returns to form
                 var hide=document.getElementsByClassName("score");
@@ -243,7 +245,8 @@ Tutorial Time: 12:00 pm Fri
                 document.getElementById('backbtn').style.display='none';
                 document.getElementById('encodebtn').style.display='none'; 
                 document.getElementById('decodebtn').style.display='none';
-                document.getElementById('fillbtn').style.display='inline';         
+                document.getElementById('fillbtn').style.display='inline'; 
+                document.getElementById("titlemes").innerHTML="input";
                     });
             $('#fillbtn').click(function(){                    //automatically fills form with preset
                 document.getElementById("a").value= "apple";
@@ -316,7 +319,7 @@ Tutorial Time: 12:00 pm Fri
         <h1 id='head' width="100%" height=20% align="center">
             Phonetic Alphabet
             <br>
-            Input
+            <p id="titlemes" onchange="myFunction()"></p>
         </h1>
         <div class='board' width='20%'>
             A: <input type="text" class='input'id='a' size="15">
@@ -413,8 +416,8 @@ Tutorial Time: 12:00 pm Fri
 
         <div class='score' width='50%'>
             Your Alphabet<br>
-            Score:<p id="yourscore" onchange="myFunction()"></p><br>
-            Average length:<p id="youravelength" onchange="myFunction()"></p><br>
+            Score:<p id="yourscore" onchange="myFunction()"></p>
+            Average length:<p id="youravelength" onchange="myFunction()"></p>
             <p id="yourpwords" onchange="myFunction()"<br>
         </div>
         <div class='score' width='50%'>
